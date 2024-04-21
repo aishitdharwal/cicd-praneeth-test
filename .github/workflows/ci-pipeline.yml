@@ -1,0 +1,25 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: login to dockerhub
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASS: ${{secrets.DOCKER_PASS}}
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - name: Build the Docker image
+      run: docker build -t cicd-praneeth .
+    - name: tag docker image
+      run: docker tag cicd-praneeth:latest aishitdharwal/cicd-praneeth:latest
+    - name: push docker image
+      run: docker push aishitdharwal/cicd-praneeth:latest
