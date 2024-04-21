@@ -4,4 +4,4 @@ app = FastAPI()
 
 @app.get('/')
 def func():
-    return {"message":"first api"}
+    return {"message":"first api v1"}
